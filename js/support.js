@@ -22,6 +22,10 @@ function getNumberCellBgColor (num) {
       return "#3365A5"
     case 2048:
       return "#09C"
+    case 4096:
+      return "#a6bc"
+    case 8192:
+      return "#93c"
     default: 
       return "#CDC1B4"
   }

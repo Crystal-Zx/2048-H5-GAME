@@ -17,7 +17,7 @@ function newGamen () {
 function init () {
   score = 0
   $("header #score").text(score)
-  $(".mask,#game-over").addClass("hide")
+  $(".mask,#game-over,#game-win").addClass("hide")
   for(var x = 0;x < 4;x++) {
     board[x] = new Array()
     for(var y = 0;y < 4;y++) {
@@ -46,7 +46,7 @@ function renderBoard () {
 
 function generateOneNumber () {
   // 随机生成一个数字 2or4
-  var randNumber = Math.random() < 0.5 ? 2 : 4
+  var randNumber = Math.random() < 0.5 ? 2 : 1024
   // 随机生成位置
   var randNumberX = Math.floor(Math.random()*4)
   var randNumberY = Math.floor(Math.random()*4)
@@ -89,36 +89,56 @@ function gameover () {
   $(".mask,#game-over").removeClass("hide")
 }
 
+function isGameWin () {
+  for(var x = 0;x < 4;x++) {
+    for(var y = 0;y < 4;y++) {
+      if(board[x][y] === 2048) {
+        gamewin()
+        return true
+      }
+    }
+  }
+  return false
+}
+
+function gamewin () {
+  $(".mask,#game-win").removeClass("hide")
+}
+
 $(document).keyup(function (e) {
+  if(isGameWin() || isGameOver()) return
   switch (e.keyCode) {
     case 37 :
       if(moveToLeft(true)) {
         renderBoard()
         generateOneNumber()
-        
       }
-      isGameOver()
+      if(!isGameWin())
+        isGameOver()
       break
     case 38 :
       if(moveToTop(true)) {
         renderBoard()
         generateOneNumber()
       }
-      isGameOver()
+      if(!isGameWin())
+        isGameOver()
       break
     case 39 :
       if(moveToRight(true)) {
         renderBoard()
         generateOneNumber()
       }
-      isGameOver()
+      if(!isGameWin())
+        isGameOver()
       break
     case 40 :
       if(moveToBottom(true)) {
         renderBoard()
         generateOneNumber()
       }
-      isGameOver()
+      if(!isGameWin())
+        isGameOver()
       break
     default: break;
   }

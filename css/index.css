@@ -106,7 +106,7 @@ header p.score-box #score {
   z-index: 1000;
   opacity: .6;
 }
-#game-over {
+#game-over,#game-win {
   width: 300px;
   height: 100px;
   color: #fff;
