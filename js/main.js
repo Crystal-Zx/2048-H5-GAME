@@ -4,8 +4,6 @@ $(document).ready(function () {
   newGamen()
 })
 
-
-
 function newGamen () {
   // 初始化棋盘
   init()
@@ -26,6 +24,21 @@ function init () {
   }
 }
 
+function generateOneNumber () {
+  // 随机生成一个数字 2or4
+  var randNumber = Math.random() < 0.5 ? 2 : 4
+  // 随机生成位置
+  var randNumberX = Math.floor(Math.random()*4)
+  var randNumberY = Math.floor(Math.random()*4)
+  // 检查该位置上是否已有值
+  if(board[randNumberX][randNumberY] !== 0) {
+    generateOneNumber()
+  } else {
+    board[randNumberX][randNumberY] = randNumber
+  }
+  renderBoard()
+}
+
 function renderBoard () {
   for(var x = 0;x < 4;x++) {
     for(var y = 0;y < 4;y++) {
@@ -44,32 +57,17 @@ function renderBoard () {
   }
 }
 
-function generateOneNumber () {
-  // 随机生成一个数字 2or4
-  var randNumber = Math.random() < 0.5 ? 2 : 1024
-  // 随机生成位置
-  var randNumberX = Math.floor(Math.random()*4)
-  var randNumberY = Math.floor(Math.random()*4)
-  // 检查该位置上是否已有值
-  if(board[randNumberX][randNumberY] !== 0) {
-    generateOneNumber()
-  } else {
-    board[randNumberX][randNumberY] = randNumber
-  }
-  renderBoard()
-}
-
 function setScore () {
   score += 4
   $("header #score").text(score)
 }
-
+// 判断此时四个方向上能否有一个能移动
 function noMove () {
   if(moveToLeft(false) || moveToTop(false) || moveToRight(false) || moveToBottom(false)) 
     return false
   return true
 }
-
+// 判断此时16宫格中是否还有空格子
 function noSpace () {
   for(var x = 0;x < 4;x++) {
     for(var y = 0;y < 4;y++) {
@@ -106,39 +104,38 @@ function gamewin () {
 }
 
 $(document).keyup(function (e) {
-  if(isGameWin() || isGameOver()) return
   switch (e.keyCode) {
     case 37 :
       if(moveToLeft(true)) {
         renderBoard()
         generateOneNumber()
+        if(!isGameWin())
+          isGameOver()
       }
-      if(!isGameWin())
-        isGameOver()
       break
     case 38 :
       if(moveToTop(true)) {
         renderBoard()
         generateOneNumber()
+        if(!isGameWin())
+          isGameOver()
       }
-      if(!isGameWin())
-        isGameOver()
       break
     case 39 :
       if(moveToRight(true)) {
         renderBoard()
         generateOneNumber()
+        if(!isGameWin())
+          isGameOver()
       }
-      if(!isGameWin())
-        isGameOver()
       break
     case 40 :
       if(moveToBottom(true)) {
         renderBoard()
         generateOneNumber()
+        if(!isGameWin())
+          isGameOver()
       }
-      if(!isGameWin())
-        isGameOver()
       break
     default: break;
   }

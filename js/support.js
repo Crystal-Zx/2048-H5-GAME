@@ -38,15 +38,6 @@ function getNumberColor(number) {
   return "white";
 }
 
-// 判断16宫格是否还有剩余空间
-function hasSpace () {
-  for(var x = 0;x < 4;x++) {
-    for(var y = 0;y < 4;y++) {
-      if(board[x][y] == 0) return true
-    }
-  }
-  return false
-}
 
 // 格子移动前端动画效果
 function showAnimate () {
