@@ -96,7 +96,7 @@ function updateArr (arr) {
       arr[i-1] *= 2
       arr.splice(i,1)
       arr.push(0)
-      i = 0
+      i = 0   // 此处不能 i -= 1 [8,2,2,4]会出问题
     }
   }
 }
